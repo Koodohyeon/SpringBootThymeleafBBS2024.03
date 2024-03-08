@@ -1,7 +1,8 @@
 package com.example.abbs.controller;
 
-import java.io.File;	
+import java.io.File;
 
+import com.example.abbs.util.AsideUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class UserController {
 	private final Logger log = LoggerFactory.getLogger(getClass());		// 이건 또 뭐야
 	@Autowired private UserService uSvc;
 	@Autowired private ImageUtil imageUtil;
+	@Autowired private AsideUtil asideUtil;
 	@Value("${spring.servlet.multipart.location}") private String uploadDir;
 	
 	@GetMapping("/register")
@@ -88,6 +90,10 @@ public class UserController {
 			session.setAttribute("github", user.getGithub());
 			session.setAttribute("insta", user.getInsta());
 			session.setAttribute("location", user.getLocation());
+			// 상태메세지
+			String quoteFile = uploadDir + "data/todayQuote.txt";
+			String stateMsg = asideUtil.getTodayQuote(quoteFile);
+			session.setAttribute("stateMsg", stateMsg);
 			
 			// 환영 메세지
 			log.info("Info Login: {}, {}", uid, user.getUname());		// 이거 공부
@@ -106,5 +112,11 @@ public class UserController {
 		}
 
 		return "common/alertMsg";
+	}
+
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/user/login";
 	}
 }
