@@ -19,7 +19,7 @@ public interface UserDao {
 	List<User> getUserList(int count, int offset);
 	
 	@Insert("insert into users values (#{uid}, #{pwd}, #{uname}, #{email}, default, default,"
-			+ " #{profile}, #{github}, #{insta}, #{location}")
+			+ " #{profile}, #{github}, #{insta}, #{location})")
 	void insertUser( User user);
 	
 	@Update("update users set pwd=#{pwd}, uname=#{uname}, email=#{email}, profile=#{profile},"

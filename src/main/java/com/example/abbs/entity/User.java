@@ -7,7 +7,7 @@ public class User {
 	private String uid;
 	private String pwd;
 	private String uname;
-	private String eamil;
+	private String email;
 	private LocalDate regDate;
 	private int isDeleted;
 	private String profile;
@@ -15,22 +15,6 @@ public class User {
 	private String insta;
 	private String location;
 	
-	
-	public User() { }
-	public User(String uid, String pwd, String uname, String eamil, LocalDate regDate, int isDeleted, String profile,
-			String github, String insta, String location) {
-		super();
-		this.uid = uid;
-		this.pwd = pwd;
-		this.uname = uname;
-		this.eamil = eamil;
-		this.regDate = regDate;
-		this.isDeleted = isDeleted;
-		this.profile = profile;
-		this.github = github;
-		this.insta = insta;
-		this.location = location;
-	}
 	
 	
 	
@@ -52,11 +36,11 @@ public class User {
 	public void setUname(String uname) {
 		this.uname = uname;
 	}
-	public String getEamil() {
-		return eamil;
+	public String getEmail() {
+		return email;
 	}
-	public void setEamil(String eamil) {
-		this.eamil = eamil;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public LocalDate getRegDate() {
 		return regDate;
@@ -96,11 +80,37 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [uid=" + uid + ", pwd=" + pwd + ", uname=" + uname + ", eamil=" + eamil + ", regDate=" + regDate
+		return "User [uid=" + uid + ", pwd=" + pwd + ", uname=" + uname + ", email=" + email + ", regDate=" + regDate
 				+ ", isDeleted=" + isDeleted + ", profile=" + profile + ", github=" + github + ", insta=" + insta
 				+ ", location=" + location + "]";
 	}
+	public User(String uid, String pwd, String uname, String email, String profile, String github, String insta,
+			String location) {
+		super();
+		this.uid = uid;
+		this.pwd = pwd;
+		this.uname = uname;
+		this.email = email;
+		this.profile = profile;
+		this.github = github;
+		this.insta = insta;
+		this.location = location;
+	}
+	public User() { }
+	public User(String uid, String pwd, String uname, String email, LocalDate regDate, int isDeleted, String profile,
+			String github, String insta, String location) {
+		super();
+		this.uid = uid;
+		this.pwd = pwd;
+		this.uname = uname;
+		this.email = email;
+		this.regDate = regDate;
+		this.isDeleted = isDeleted;
+		this.profile = profile;
+		this.github = github;
+		this.insta = insta;
+		this.location = location;
+	}
 	
 	
-
 }
