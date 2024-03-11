@@ -14,6 +14,7 @@ public class Board {
 	private int replyCount;
 	private int likeCount;
 	private String files;
+	private String uname;
 	
 	public Board() { }
 	public Board(int bid, String title, String content, String uid, LocalDateTime modTime, int isDeleted, int viewCount,
@@ -96,7 +97,16 @@ public class Board {
 	public void setFiles(String files) {
 		this.files = files;
 	}
-	
-	
-	
+
+	public Board(String uname) {
+		this.uname = uname;
+	}
+
+	public String getUname() {
+		return uname;
+	}
+
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
 }
