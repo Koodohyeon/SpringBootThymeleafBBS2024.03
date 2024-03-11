@@ -28,8 +28,9 @@ public class UserController {
 	@Autowired private UserService uSvc;
 	@Autowired private ImageUtil imageUtil;
 	@Autowired private AsideUtil asideUtil;
-	@Value("${spring.servlet.multipart.location}") private String uploadDir;
 	
+	@Value("${spring.servlet.multipart.location}") private String uploadDir;
+
 	@GetMapping("/register")
 	public String registerForm() {
 		return "user/register";
