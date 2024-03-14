@@ -41,9 +41,39 @@
 					</tr>
 					<tr th:each="week: ${calendar}">
 						<div th:each="day: ${week}">
-							<td th:style="|height: ${height}px|">
-								[[${day.day}]]<br>
-								[[${day.sdate}]]
+							<td th:style="|height: ${height}px; ${todaySdate == day.sdate ? 'background-color : #efffff;' : ''}|">
+								<div th:if="${day.isOtherMonth == 1}">		<!-- 지난달, 다음달은 날짜색을 흐리게 -->
+									<div class="d-flex justify-content-between">		<!-- 양끝 정렬 -->
+										<div style="opacity: 0.5;" th:class="${(day.date == 0 || day.isHoliday == 1) ? 'text-danger' : day.date == 6 ? 'text-primary' : ''}">
+											<strong th:text="${day.day}"></strong>
+										</div>
+										<div>
+											<small th:each="anniv: ${day.annivList}">
+												<span th:text="|${annivStat.first ? '' : '&middot;'} ${anniv}|"></span>
+											</small>
+										</div>
+									</div>
+								</div>
+								<div th:if="${day.isOtherMonth == 0}">
+									<div class="d-flex justify-content-between">		<!-- 양끝 정렬 -->
+										<div th:class="${(day.date == 0 || day.isHoliday == 1) ? 'text-danger' : day.date == 6 ? 'text-primary' : ''}">
+											<strong th:text="${day.day}"></strong>
+										</div>
+										<div>
+											<small th:each="anniv: ${day.annivList}">
+												<span th:text="|${annivStat.first ? '' : '&middot;'} ${anniv}|"></span>
+											</small>
+										</div>
+									</div>
+								</div>
+								<div th:each="sched: ${day.schedList}">
+									<span class="" th:class="${schedStat.first ? 'mt-1' : ''}" th:onclick="schedClick([[${sched.sid}]])">
+									  <small>
+										<span th:text="${sched.startTime}"></span>
+										<span th:class="${sched.isImportant == 1 ? 'fw-bold' : ''}" th:text="${sched.title}"></span>
+									  </small>
+									</span>
+								</div>
 							</td>
 						</div>
 					</tr>

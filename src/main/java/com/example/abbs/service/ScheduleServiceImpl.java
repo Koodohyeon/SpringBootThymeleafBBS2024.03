@@ -56,7 +56,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         for (Anniversary anniv: annivList) {
             aList.add(anniv.getAname());
             if (isHoliday == 0)
-                isHoliday = anniv.getIsholiday();
+                isHoliday = anniv.getIsHoliday();
         }
         SchDay schDay = new SchDay(day, date, isHoliday, isOtherMonth, sdate, aList, schedList);
         return schDay;

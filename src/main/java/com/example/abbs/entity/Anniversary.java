@@ -5,23 +5,23 @@ public class Anniversary {
 	private String uid;
 	private String aname;
 	private String adate;
-	private int isholiday;
-	
-	
+	private int isHoliday;
+
 	public Anniversary() { }
-	public Anniversary(int aid, String uid, String aname, String adate, int isholiday) {
-		super();
+	public Anniversary(int aid, String uid, String aname, String adate, int isHoliday) {
 		this.aid = aid;
 		this.uid = uid;
 		this.aname = aname;
 		this.adate = adate;
-		this.isholiday = isholiday;
+		this.isHoliday = isHoliday;
 	}
+
 	@Override
 	public String toString() {
-		return "Anniversary [aid=" + aid + ", uid=" + uid + ", aname=" + aname + ", adate=" + adate + ", isholiday="
-				+ isholiday + "]";
+		return "Anniversary [aid=" + aid + ", uid=" + uid + ", aname=" + aname + ", adate=" + adate + ", isHoliday="
+				+ isHoliday + "]";
 	}
+
 	public int getAid() {
 		return aid;
 	}
@@ -46,13 +46,10 @@ public class Anniversary {
 	public void setAdate(String adate) {
 		this.adate = adate;
 	}
-	public int getIsholiday() {
-		return isholiday;
+	public int getIsHoliday() {
+		return isHoliday;
 	}
-	public void setIsholiday(int isholiday) {
-		this.isholiday = isholiday;
+	public void setIsHoliday(int isHoliday) {
+		this.isHoliday = isHoliday;
 	}
-	
-	
-
 }
