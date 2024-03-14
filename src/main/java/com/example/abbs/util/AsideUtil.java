@@ -9,7 +9,6 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,21 +17,17 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 @Service
-@PropertySource("classpath:static/data/myKeys.properties")
+@PropertySource("classpath:/static/data/myKeys.properties")
 public class AsideUtil {
-
-    @Value("${kakaoApikey}")
-    private String kakaoApikey;
-    @Value("${roadAddrKey}")
-    private String roadAddrKey;
-    @Value("${openWeatherApikey}")
-    private String openWeatherApikey;
+    @Value("${roadAddrKey}") private String roadAddrKey;
+    @Value("${kakaoApikey}") private String kakaoApikey;
+    @Value("${openWeatherApikey}") private String openWeatherApikey;
 
     public String getTodayQuote(String filename) {
         String result = null;
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename), 1024);
-            int index = (int) Math.floor(Math.random() * 100);        // 0 ~ 99
+            int index = (int) Math.floor(Math.random() * 100);		// 0 ~ 99
             for (int i = 0; i <= index; i++)
                 result = br.readLine();
             br.close();
@@ -42,44 +37,35 @@ public class AsideUtil {
         return result;
     }
 
-
     // 행안부 도로명주소 API
     public String getRoadAddr(String keyword) {
-
         String roadAddr = null;
-        String result = null;
         try {
             keyword = URLEncoder.encode(keyword, "utf-8");
             String apiUrl = "https://www.juso.go.kr/addrlink/addrLinkApi.do"
-                    + "?confmKey=" + roadAddrKey
-                    + "&currentPage=1&countPerPage=5&resultType=json"
-                    + "&keyword=" + keyword;
+                    + "?confmKey=" + roadAddrKey + "&keyword=" + keyword
+                    + "&currentPage=1&countPerPage=5&resultType=json";
             URL url = new URL(apiUrl);
-            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-            result = "";
-            String line = null;
-            while ((line = br.readLine()) != null) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"));
+            String line = null, result = "";
+            while ((line = br.readLine()) != null)
                 result += line;
-            }
             br.close();
-            System.out.println(result);
+
             // JSON 데이터에서 원하는 값 추출하기
             JSONParser parser = new JSONParser();
-            JSONObject object = (JSONObject) parser.parse(result.toString());
+            JSONObject object = (JSONObject) parser.parse(result);
             JSONObject results = (JSONObject) object.get("results");
             JSONArray juso = (JSONArray) results.get("juso");
             JSONObject jusoItem = (JSONObject) juso.get(0);
-            //    	System.out.println(jusoItem.keySet());
             roadAddr = (String) jusoItem.get("roadAddr");
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return roadAddr;
     }
 
-    // kakao API
+    // Kakao Local API
     public Map<String, String> getGeocode(String addr) {
         Map<String, String> map = new HashMap<String, String>();
         try {
@@ -93,31 +79,27 @@ public class AsideUtil {
             conn.setRequestProperty("Authorization", "KakaoAK " + kakaoApikey);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-            String line = null;
-            String result = "";
-            while ((line = br.readLine()) != null) {
+            String line = null, result = "";
+            while ((line = br.readLine()) != null)
                 result += line;
-            }
             br.close();
+
             // JSON 데이터에서 원하는 값 추출하기
             JSONParser parser = new JSONParser();
             JSONObject object = (JSONObject) parser.parse(result);
             JSONArray documents = (JSONArray) object.get("documents");
             JSONObject item = (JSONObject) documents.get(0);
-            String lon_ = (String) item.get("x");
-            String lat_ = (String) item.get("y");
-
-            map.put("lon", lon_);
-            map.put("lat", lat_);
-
+            String lon = (String) item.get("x");
+            String lat = (String) item.get("y");
+            map.put("lon", lon);
+            map.put("lat", lat);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return map;
     }
 
-
-    // open Weather API
+    // Open Weather API
     public String getWeather(String lon, String lat) {
         String apiUrl = "https://api.openweathermap.org/data/2.5/weather"
                 + "?lat=" + lat + "&lon=" + lon + "&appid=" + openWeatherApikey
@@ -125,12 +107,10 @@ public class AsideUtil {
         String weatherStr = null;
         try {
             URL url = new URL(apiUrl);
-            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream(), "utf-8"));
-            String line = null;
-            String result = "";
-            while ((line = br.readLine()) != null) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"));
+            String line = null, result = "";
+            while ((line = br.readLine()) != null)
                 result += line;
-            }
             br.close();
 
             JSONParser parser = new JSONParser();
@@ -150,4 +130,5 @@ public class AsideUtil {
         }
         return weatherStr;
     }
+
 }
